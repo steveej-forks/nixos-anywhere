@@ -29,8 +29,11 @@ Options:
 * -s, --store-paths <disko-script> <nixos-system>
   set the store paths to the disko-script and nixos-system directly
   if this is given, flake is not needed
-* --kexec <path>
-  use another kexec tarball to bootstrap NixOS
+* --kexec <path_or_url>
+  use another kexec tarball to bootstrap NixOS, overriding KEXEC_PATH_OR_URL.
+  Empty or unset KEXEC_PATH_OR_URL uses the default image.
+* --force-kexec
+  don't check if we're in the installer, run kexec anyway
 * --kexec-extra-flags
   extra flags to add into the call to kexec, e.g. "--no-sync"
 * --ssh-store-setting <key> <value>
