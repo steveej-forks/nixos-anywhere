@@ -18,6 +18,7 @@ let
   };
 in
 {
+  kexec-source = pkgs.callPackage ./kexec-source.nix { inherit nixos-anywhere; };
   from-nixos = import ./from-nixos.nix testInputsUnstable;
   from-nixos-stable = import ./from-nixos.nix testInputsStable;
   from-nixos-with-sudo = import ./from-nixos-with-sudo.nix testInputsUnstable;

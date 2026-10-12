@@ -4,7 +4,7 @@ set -euo pipefail
 here=$(dirname "${BASH_SOURCE[0]}")
 flake=""
 flakeAttr=""
-kexecUrl=""
+kexecUrl="${KEXEC_PATH_OR_URL-}"
 forceKexec=false
 kexecExtraFlags=""
 sshStoreSettings="compress=true"
@@ -144,8 +144,9 @@ Options:
 * -s, --store-paths <disko-script> <nixos-system>
   set the store paths to the disko-script and nixos-system directly
   if this is given, flake is not needed
-* --kexec <path>
-  use another kexec tarball to bootstrap NixOS
+* --kexec <path_or_url>
+  use another kexec tarball to bootstrap NixOS, overriding KEXEC_PATH_OR_URL.
+  Empty or unset KEXEC_PATH_OR_URL uses the default image.
 * --force-kexec
   don't check if we're in the installer, run kexec anyway
 * --kexec-extra-flags
@@ -709,7 +710,7 @@ runKexec() {
   if [[ $kexecUrl == "" ]]; then
     case "${isArch}" in
     x86_64 | aarch64)
-      kexecUrl="https://github.com/nix-community/nixos-images/releases/download/nixos-25.11/nixos-kexec-installer-noninteractive-${isArch}-linux.tar.gz"
+      kexecUrl="https://github.com/nix-community/nixos-images/releases/download/nixos-26.05/nixos-kexec-installer-noninteractive-${isArch}-linux.tar.gz"
       ;;
     *)
       abort "Unsupported architecture: ${isArch}. Our default kexec images only support x86_64 and aarch64 CPUs. Check out https://nix-community.github.io/nixos-anywhere/howtos/custom-kexec.html for more information."

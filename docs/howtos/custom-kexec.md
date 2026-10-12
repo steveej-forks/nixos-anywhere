@@ -3,6 +3,18 @@
 By default, `nixos-anywhere` downloads the kexec image from the
 [NixOS images repository](https://github.com/nix-community/nixos-images#kexec-tarballs).
 
+Set `KEXEC_PATH_OR_URL` to a local file or URL to select a custom image at runtime.
+An explicit `--kexec` argument takes precedence over the environment variable.
+An unset or empty environment variable selects the default image for the target architecture.
+An explicit empty `--kexec ''` also selects the default, overriding a nonempty environment variable.
+The selected local file is uploaded, or the selected URL is downloaded, before kexec runs on the target.
+Quote paths that contain spaces:
+
+```console
+KEXEC_PATH_OR_URL='/absolute/path/custom installer.tar.gz' \
+  nixos-anywhere --flake 'github:your-user/your-repo#your-system' root@yourip
+```
+
 However, you can provide your own `kexec` image file if you need to use a
 different one. This is particularly useful for architectures other than `x86_64`
 and `aarch64`, since they don't have a pre-build image.
